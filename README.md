@@ -5,7 +5,7 @@
 PyERP is a Python-powered ERP system with Ntfy integration, osTickit integration, and Vikunja integration planned.
 The project is so tiring that it cannot be finished quickly but soon.
 You will not be charged for using this project and can use it commercially (why would anybody do that though?).
-For more legal information, please refer to the GNU license.
+For more license information, please refer to the GNU license.
 
 ***READ BEFORE DEPLOYMENT!!!***
 
