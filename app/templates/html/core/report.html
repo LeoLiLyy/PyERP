@@ -1,0 +1,41 @@
+{% extends "html/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Submit a Bug Report or Feature Request</h2>
+    <div class="box">
+        <form method="post" action="/report">
+            <div class="field">
+                <label class="label">Severity</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="severity">
+                            <option value="none">None</option>
+                            <option value="low">Low</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                    <input class="input" type="text" name="title" placeholder="Brief title for the request or bug" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                    <textarea class="textarea" name="description" placeholder="Detailed description of the bug or feature" required></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-link">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

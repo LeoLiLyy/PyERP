@@ -1,0 +1,65 @@
+{% extends "./html/base.html" %}
+
+{% block content %}
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/">Home</a>
+            {% if current_user.is_authenticated %}
+            <a class="navbar-item" href="/dashboard">Dashboard</a>
+            <a class="navbar-item" href="/logout">Logout</a>
+            {% endif %}
+            {% if not current_user.is_authenticated %}
+            <a class="navbar-item" href="/login">Login</a>
+            {% endif %}
+            <a class="navbar-item" href="/inventory">Inventory</a>
+            <a class="navbar-item" href="/sales">Sales</a>
+            <a class="navbar-item" href="/purchases">Purchases</a>
+            <a class="navbar-item" href="/design">Design Center</a>
+            <a class="navbar-item" href="/report">Report A Bug</a>
+        </div>
+    </div>
+</nav>
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Edit Item</h3>
+    <div class="box">
+        <form method="POST" action="">
+            <div class="field">
+                <label class="label">Item Name:</label>
+                <div class="control">
+                    <input class="input is-large" type="text" name="name" placeholder="Item Name" value="{{ item.I_Name }}" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Item Description:</label>
+                <div class="control">
+                    <input class="input is-large" type="text" name="disc" placeholder="Description for Item" value="{{ item.Dept }}" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">In Date:</label>
+                <div class="control">
+                    <input class="input is-large" type="text" name="in_date" placeholder="In Date" value="{{ item.InDate }}">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Warehouse Number:</label>
+                <div class="control">
+                    <input class="input is-large" type="text" name="warehouse_num" placeholder="Warehouse Number" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Quantity:</label>
+                <div class="control">
+                    <input class="input is-large" type="text" name="quantity" placeholder="Quantity" autocomplete="off">
+                </div>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">Update Item</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

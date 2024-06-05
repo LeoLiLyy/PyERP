@@ -1,0 +1,42 @@
+{% extends "./html/base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Check In New Item</h3>
+    <div class="box">
+        <form method="POST" action="/check_in_item">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="ItemId" placeholder="ItemID" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="i_name" placeholder="Item Name" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="i_disc" placeholder="Description" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="warehouse_num" placeholder="Warehouse Number">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="quantity" placeholder="Item Quantity">
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth">Check In</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

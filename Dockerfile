@@ -1,10 +1,14 @@
-# Use the official Nginx image from the Docker Hub
-FROM nginx:alpine
-LABEL authors="liyueyang"
+FROM python:3.11-slim
+WORKDIR /app
 
-# Copy the Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY requirements.txt requirements.txt
+COPY requirements.txt aaa.txt
 
-# Expose the port Nginx runs on
-EXPOSE 80
+RUN apt-get update && apt-get install -y gcc && apt-get install -y build-essential
+RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install -y default-mysql-client
 
+COPY . .
+
+# CMD ["uwsgi", "--socket", "0.0.0.0:5000", "--protocol", "http", "-w", "wsgi:app"]
+CMD ["uwsgi", "--ini", "uwsgi.ini"]

@@ -1,0 +1,8 @@
+{
+  "db": "mysql",
+  "db_dat": {
+    "usr": "root",
+    "psd": "toor",
+    "dbs": ["usrs", "products"]
+  }
+}
