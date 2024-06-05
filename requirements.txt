@@ -1,0 +1,9 @@
+Flask~=3.0.3
+colorlog~=6.8.2
+requests~=2.31.0
+MarkupSafe~=2.1.5
+IMAPClient~=3.0.1
+matplotlib~=3.9.0rc2
+solana~=0.34.0
+solders~=0.21.0
+werkzeug~=3.0.3
