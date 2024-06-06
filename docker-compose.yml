@@ -32,5 +32,5 @@ services:
       MYSQL_ROOT_PASSWORD: toor
       MYSQL_DATABASE: pyerp
     volumes:
-      - "./db-init/init.sql:/init-app/init.sql"
+      - "./app/db-init/init.sql:/init-app/init.sql"
     restart: unless-stopped

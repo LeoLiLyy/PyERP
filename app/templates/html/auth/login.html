@@ -4,19 +4,19 @@
 <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" href="/">Home</a>
+            <a class="navbar-item" href="/">{{ _('Home') }}</a>
             {% if current_user.is_authenticated %}
-            <a class="navbar-item" href="/dashboard">Dashboard</a>
-            <a class="navbar-item" href="/logout">Logout</a>
+            <a class="navbar-item" href="/dashboard">{{ _('Dashboard') }}</a>
+            <a class="navbar-item" href="/logout">{{ _('Logout') }}</a>
             {% endif %}
             {% if not current_user.is_authenticated %}
-            <a class="navbar-item" href="/login">Login</a>
+            <a class="navbar-item" href="/login">{{ _('Login') }}</a>
             {% endif %}
-            <a class="navbar-item" href="/inventory">Inventory</a>
-            <a class="navbar-item" href="/sales">Sales</a>
-            <a class="navbar-item" href="/purchases">Purchases</a>
-            <a class="navbar-item" href="/design">Design Center</a>
-            <a class="navbar-item" href="/report">Report A Bug</a>
+            <a class="navbar-item" href="/inventory">{{ _('Inventory') }}</a>
+            <a class="navbar-item" href="/sales">{{ _('Sales') }}</a>
+            <a class="navbar-item" href="/purchases">{{ _('Purchases') }}</a>
+            <a class="navbar-item" href="/design">{{ _('Design Center') }}</a>
+            <a class="navbar-item" href="/report">{{ _('Report A Bug') }}</a>
         </div>
     </div>
 </nav>
@@ -26,25 +26,26 @@
         <form method="POST" action="/login">
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
+                    <input class="input is-large" type="email" name="email" placeholder="{{ _('Your Email') }}" autofocus="">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Your Password">
+                    <input class="input is-large" type="password" name="password" placeholder="{{ _('Your Password') }}">
                 </div>
             </div>
             <div class="field">
                 <label class="checkbox">
                     <input type="checkbox" name="remember">
-                    Remember me
+                    {{ _('Remember me') }}
                 </label>
             </div>
             <button class="button is-block is-info is-large is-fullwidth">{{ _('login') }}</button>
         </form>
     </div>
 </div>
+<br>
 <br>
 <br>
 <br>

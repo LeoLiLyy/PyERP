@@ -1,7 +1,15 @@
 {
-  "hello": "你好",
-  "goodbye": "再见",
-  "thank_you": "谢谢",
+  "Home": "主页",
+  "Dashboard": "仪表板",
+  "Logout": "登出",
+  "Login": "登录",
+  "Inventory": "库存",
+  "Sales": "销售",
+  "Purchases": "采购",
+  "Design Center": "设计中心",
+  "Report A Bug": "报告错误",
   "login": "登录",
-  "dashboard": "仪表板"
+  "Your Email": "您的电子邮件",
+  "Your Password": "您的密码",
+  "Remember me": "记住我"
 }

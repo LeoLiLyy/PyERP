@@ -4,7 +4,7 @@ import os
 
 def load_translations(language_code):
     filename = f'{language_code}.json'
-    filepath = os.path.join('translations', filename)
+    filepath = os.path.join('../datas/lang/', filename)
     if os.path.exists(filepath):
         with open(filepath, 'r', encoding='utf-8') as file:
             return json.load(file)

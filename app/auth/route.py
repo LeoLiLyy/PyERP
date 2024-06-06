@@ -1,9 +1,10 @@
 from flask import render_template, request, redirect, url_for
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from . import auth_bp
-from ..language_manager import _
+from ..extensions.official.language_manager import _
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@auth_bp.route("/login", methods=['GET', 'POST'])
 def login():
     global user, email
     # the method will change to POST if the login button is pressed
@@ -42,8 +43,9 @@ def login():
     language_manager = LanguageManager('zh_cn')  # Example: dynamically determine the language
     return render_template('login.html', _=_)
 
+
 @login_required
-@app.route("/logout")
+@auth_bp.route("/logout")
 def logout():
     # removing the user from the list of online users
     users_online.remove(email)

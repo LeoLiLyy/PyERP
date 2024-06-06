@@ -29,5 +29,5 @@ CREATE TABLE project (
     P_Disc VARCHAR(500) NULL,
     Deadline VARCHAR(10) NULL,
     Products VARCHAR(500) NULL,
-    Customer VARCHAR(100) NULL,
+    Customer VARCHAR(100) NULL
 );
