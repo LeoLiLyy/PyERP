@@ -1,70 +1,37 @@
-{% extends "./html/base.html" %}
+{% extends "html/core/base.html" %}
 
 {% block content %}
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="/">{{ _('Home') }}</a>
-            {% if current_user.is_authenticated %}
-            <a class="navbar-item" href="/dashboard">{{ _('Dashboard') }}</a>
-            <a class="navbar-item" href="/logout">{{ _('Logout') }}</a>
-            {% endif %}
-            {% if not current_user.is_authenticated %}
-            <a class="navbar-item" href="/login">{{ _('Login') }}</a>
-            {% endif %}
-            <a class="navbar-item" href="/inventory">{{ _('Inventory') }}</a>
-            <a class="navbar-item" href="/sales">{{ _('Sales') }}</a>
-            <a class="navbar-item" href="/purchases">{{ _('Purchases') }}</a>
-            <a class="navbar-item" href="/design">{{ _('Design Center') }}</a>
-            <a class="navbar-item" href="/report">{{ _('Report A Bug') }}</a>
-        </div>
-    </div>
-</nav>
 <div class="column is-4 is-offset-4">
-    <h3 class="title">{{ _('login') }}</h3>
+    <h3 class="title">{{ g.translations['Login'] }}</h3>
     <div class="box">
-        <form method="POST" action="/login">
+        <form method="POST" action="{{ url_for('auth.login') }}">
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="{{ _('Your Email') }}" autofocus="">
+                    <input class="input is-large" type="email" name="email" placeholder="{{ g.translations['Your Email'] }}" autofocus="">
                 </div>
             </div>
 
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="{{ _('Your Password') }}">
+                    <input class="input is-large" type="password" name="password" placeholder="{{ g.translations['Your Password'] }}">
                 </div>
             </div>
             <div class="field">
                 <label class="checkbox">
                     <input type="checkbox" name="remember">
-                    {{ _('Remember me') }}
+                    {{ g.translations['Remember me'] }}
                 </label>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth">{{ _('login') }}</button>
+            <div class="field">
+                <!-- Google reCAPTCHA widget -->
+                <div class="g-recaptcha" data-sitekey="6LfKCfUpAAAAALmlhIizeAQqSga4gevb2UD1s7EC"></div>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">{{ g.translations['Login'] }}</button>
         </form>
+        {% if error %}
+        <p class="help is-danger">{{ error }}</p>
+        {% endif %}
     </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}

@@ -1,62 +1,72 @@
-from flask import render_template, request, redirect, url_for
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from . import auth_bp
-from ..extensions.official.language_manager import _
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, g
+from flask_login import login_user, logout_user, login_required, current_user
+from app.translations import load_translations  # Correct import
+import hashlib
+import os
+import requests
+import logging
 
+auth_bp = Blueprint('auth', __name__)
+
+logger = logging.getLogger('auth')
+
+# Use the secret key from your Google reCAPTCHA registration
+RECAPTCHA_SECRET_KEY = '6LfKCfUpAAAAAD8T-9thLK60OxvPTYdNCEuby0ql'
+
+users_online = []
 
 @auth_bp.route("/login", methods=['GET', 'POST'])
 def login():
     global user, email
-    # the method will change to POST if the login button is pressed
-    # detection for the change in method is done here
     if request.method == 'POST':
-        # email and password typed in the html form is stored here
         email = request.form['email']
-        # password is hashed immediately
+        recaptcha_response = request.form['g-recaptcha-response']
         password = hashlib.sha256(request.form['password'].encode('utf-8')).hexdigest()
-        # query for user is done here
+        from app.models import Employee, db
         user = Employee.query.filter_by(Email=email, Password=password).first()
 
         logger.debug("[!] List of users detected:" + str(user))
 
-        if user:
-            # requests.post("http://localhost:80/erp_admin_ntfy",
-            #               data=str(str(request.form["email"]) + " is now logged in!").encode(encoding='utf-8'))
-            logger.info("[*] " + str(request.form["email"]) + " is now logged in!")
-            login_user(user, remember=request.form.get('remember', 'false').lower() in ['true', '1', 't'])
-            # all users online is stored in this list
-            users_online.append(email)
-            # the session token (which is stored in the database) is used to verify and kick users that's currently
-            # online
-            session_token = os.urandom(24).hex()
-            # storing the session token in the session (bruh)
-            user.session_token = session_token
-            db.session.commit()
-            session['user_token'] = session_token
-            return redirect('/dashboard')
+        # Validate reCAPTCHA response
+        data = {
+            'secret': RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+        validation_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        validation_result = validation_response.json()
+
+        if validation_result['success']:
+            if user:
+                logger.info("[*] " + str(request.form["email"]) + " is now logged in!")
+                login_user(user, remember=request.form.get('remember', 'false').lower() in ['true', '1', 't'])
+                users_online.append(email)
+                session_token = os.urandom(24).hex()
+                user.session_token = session_token
+                db.session.commit()
+                session['user_token'] = session_token
+                return redirect('/core/dashboard')
+            else:
+                logger.warning("Illegal login attempt (typo & wrong credentials) detected")
+                flash(g.translations['Invalid username or password.'])
+                return render_template('./html/auth/login.html')
         else:
-            logger.warning("Illegal login attempt detected")
-            # requests.post("http://localhost:80/erp_admin_ntfy",
-            #               data="Illegal login attempt detected".encode(encoding='utf-8'))
-            language_manager = LanguageManager('zh_cn')  # Example: dynamically determine the language
-            return render_template('login.html', _=_)
-    language_manager = LanguageManager('zh_cn')  # Example: dynamically determine the language
-    return render_template('login.html', _=_)
+            # Handle reCAPTCHA validation failure
+            logger.warning("Illegal login attempt (bot) detected")
+            flash(g.translations['reCAPTCHA validation failed.'])
+            return render_template('./html/auth/login.html')
+    return render_template('./html/auth/login.html')
 
 
 @login_required
 @auth_bp.route("/logout")
 def logout():
-    # removing the user from the list of online users
+    global email, db
     users_online.remove(email)
     user_fil = Employee.query.filter_by(EmployeeID=current_user.get_id()).first()
     if user_fil:
-        # flush the session token as you won't be needing it for a user that's logged out
         user_fil.session_token = None
         db.session.commit()
     session.pop('user_token', None)
     logout_user()
-    # requests.post("http://localhost:80/erp_admin_ntfy",
-    #               data=str(email) + " is now logged out").encode(encoding='utf-8')
     logger.info("[*] " + str(email) + " is now logged out")
     return redirect("/")

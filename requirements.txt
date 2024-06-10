@@ -7,3 +7,4 @@ matplotlib~=3.9.0rc2
 solana~=0.34.0
 solders~=0.21.0
 werkzeug~=3.0.3
+mysql-connector-python~=8.4.0

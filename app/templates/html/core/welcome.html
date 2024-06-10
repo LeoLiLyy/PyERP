@@ -1,25 +1,6 @@
-{% extends "base.html" %}
+{% extends "html/core/base.html" %}
 
 {% block content %}
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="/">Home</a>
-            {% if current_user.is_authenticated %}
-            <a class="navbar-item" href="/dashboard">Dashboard</a>
-            <a class="navbar-item" href="/logout">Logout</a>
-            {% endif %}
-            {% if not current_user.is_authenticated %}
-            <a class="navbar-item" href="/login">Login</a>
-            {% endif %}
-            <a class="navbar-item" href="/inventory">Inventory</a>
-            <a class="navbar-item" href="/sales">Sales</a>
-            <a class="navbar-item" href="/purchases">Purchases</a>
-            <a class="navbar-item" href="/design">Design Center</a>
-            <a class="navbar-item" href="/report">Report A Bug</a>
-        </div>
-    </div>
-</nav>
 <h1 class="title">
   PyERP
 </h1>
@@ -28,13 +9,13 @@
 </h2>
 <br>
 {% if current_user.is_authenticated %}
-<form method="GET" action="{{ url_for('dashboard') }}">
-<button class="button is-block is-info" style="margin: 0 auto;">To Dashboard</button>
+<form method="GET" action="{{ url_for('core.dashboard') }}">
+<button class="button is-block is-info" style="margin: 0 auto; text-align: center;">To Dashboard</button>
 </form>
 {% endif %}
 {% if not current_user.is_authenticated %}
-<form method="GET" action="{{ url_for('login') }}">
-<button class="button is-block is-info" style="margin: 0 auto;">To Dashboard</button>
+<form method="GET" action="{{ url_for('auth.login') }}">
+<button class="button is-block is-info" style="margin: 0 auto; text-align: center;">To Dashboard</button>
 </form>
 {% endif %}
 <br>

@@ -1,0 +1,16 @@
+{
+    "Home": "主页",
+    "Dashboard": "仪表盘",
+    "Logout": "登出",
+    "Login": "登录",
+    "Inventory": "库存",
+    "Sales": "销售",
+    "Purchases": "采购",
+    "Design Center": "设计中心",
+    "Report A Bug": "报告错误",
+    "Your Email": "你的邮箱",
+    "Your Password": "你的密码",
+    "Remember me": "记住我",
+    "reCAPTCHA validation failed.": "reCAPTCHA 验证失败。",
+    "Invalid username or password.": "用户名或密码无效。"
+}
