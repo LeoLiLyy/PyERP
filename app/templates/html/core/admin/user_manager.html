@@ -1,28 +1,9 @@
-{% extends "./html/base.html" %}
+{% extends "html/core/base.html" %}
 
 {% block content %}
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="/">Home</a>
-            {% if current_user.is_authenticated %}
-            <a class="navbar-item" href="/admin">Admin Dashboard</a>
-            <a class="navbar-item" href="/logout">Logout</a>
-            {% endif %}
-            {% if not current_user.is_authenticated %}
-            <a class="navbar-item" href="/login">Login</a>
-            {% endif %}
-            <a class="navbar-item" href="/inventory">Inventory</a>
-            <a class="navbar-item" href="/sales">Sales</a>
-            <a class="navbar-item" href="/purchases">Purchases</a>
-            <a class="navbar-item" href="/design">Design Center</a>
-            <a class="navbar-item" href="/report">Report A Bug</a>
-        </div>
-    </div>
-</nav>
 <div class="column is-4 is-offset-4">
     <h3 class="title">User Management</h3>
     <div class="box" style="width: 80%;
@@ -33,17 +14,16 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     background: white;
     flex-direction: column;
-    hborder: 1px solid #ccc;  /* Just for demonstration */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);">
         <table border="1" style="width: 100%;
     border-collapse: collapse; :nth-child(even) {
-    background-color: #f9f9f9;">
+    background-color: #f9f9f9;}">
             <thead>
                 <tr style=":hover {
-    background-color: #ddf;">
+    background-color: #ddf;}">
                     <th style="padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
@@ -82,7 +62,7 @@
                 {% for user in users %}
                 <tr style=":hover {
     background-color: #ddf; :nth-child(even) {
-    background-color: #f9f9f9;">
+    background-color: #f9f9f9;}}">
                     <td style="padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;">{{ user.EmployeeID }}</td>

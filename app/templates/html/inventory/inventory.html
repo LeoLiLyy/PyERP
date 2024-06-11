@@ -1,40 +1,18 @@
-{% extends "./html/base.html" %}
+{% extends "html/core/base.html" %}
 
 {% block content %}
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div>
-        <div class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="/">Home</a>
-                {% if current_user.is_authenticated %}
-                <a class="navbar-item" href="/dashboard">Dashboard</a>
-                <a class="navbar-item" href="/logout">Logout</a>
-                {% endif %}
-                {% if not current_user.is_authenticated %}
-                <a class="navbar-item" href="/login">Login</a>
-                {% endif %}
-                <a class="navbar-item" href="/inventory">Inventory</a>
-                <a class="navbar-item" href="/sales">Sales</a>
-                <a class="navbar-item" href="/purchases">Purchases</a>
-                <a class="navbar-item" href="/design">Design Center</a>
-                <a class="navbar-item" href="/report">Report A Bug</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
 <!-- Inventory Summary Card -->
 <section class="section">
     <div class="container">
         <div class="card">
             <header class="card-header">
                 <p class="card-header-title">
-                    Inventory Space Usage
+                    {{ _('Inventory Space Usage') }}
                 </p>
             </header>
             <div class="card-content">
                 <div class="content">
-                    <img src="{{ url_for('static', filename='inventory_space.png') }}" alt="Inventory Space Usage">
+                    <img src="{{ url_for('static', filename='inventory_space.png') }}" alt="{{ _('Inventory Space Usage') }}">
                 </div>
             </div>
         </div>
@@ -43,90 +21,44 @@
 <!-- Inventory Items List -->
 <section class="section">
     <div class="container">
-        <h1 class="title has-text-white">Inventory Items</h1>
+        <h1 class="title has-text-white">{{ _('Inventory Items') }}</h1>
         <div class="columns is-multiline">
             <div class="column is-full">
                 <div class="box">
-                    <table border="1" style="width: 100%;
-    border-collapse: collapse; :nth-child(even) {
-    background-color: #f9f9f9;">
+                    <table border="1" style="width: 100%; border-collapse: collapse; :nth-child(even) { background-color: #f9f9f9;}}">
                         <thead>
-                            <tr style=":hover {
-                background-color: #ddf;">
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Item ID</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Name</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Description</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">In Date</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Out Date</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Warehouse Number</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Quantity</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Edit</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Check Out</th>
+                            <tr style=":hover { background-color: #ddf;}">
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Item ID') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Name') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Description') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('In Date') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Out Date') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Warehouse Number') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Quantity') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Edit') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Check Out') }}</th>
                             </tr>
                         </thead>
-                            <tbody>
+                        <tbody>
                             {% for item in items %}
-                            <tr style=":hover {
-                background-color: #ddf; :nth-child(even) {
-                background-color: #f9f9f9;">
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ item.ItemID }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ item.I_Name }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ item.I_Disc }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ item.InDate }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ item.OutDate }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ item.Warehouse_Num }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ item.Quantity }}</td>
+                            <tr style=":hover { background-color: #ddf; :nth-child(even) { background-color: #f9f9f9;}}">
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.ItemID }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.I_Name }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.I_Disc }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.InDate }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.OutDate }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.Warehouse_Num }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item.Quantity }}</td>
                                 <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">
-                                    <form method="POST" action="/inventory">
+                                    <form method="POST" action="/inventory/inventory">
                                         <input type="hidden" name="item_id" value="{{ item.ItemID }}">
-                                        <button type="submit" name="action" value="i_edit" class="button is-info">Edit</button>
+                                        <button type="submit" name="action" value="i_edit" class="button is-info">{{ _('Edit') }}</button>
                                     </form>
                                 </td>
                                 <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">
-                                    <form method="POST" action="/inventory">
+                                    <form method="POST" action="/inventory/inventory">
                                         <input type="hidden" name="item_id" value="{{ item.ItemID }}">
-                                        <button type="submit" name="action" value="i_check_out" class="button is-info">Check Out</button>
+                                        <button type="submit" name="action" value="i_check_out" class="button is-info">{{ _('Check Out') }}</button>
                                     </form>
                                 </td>
                             </tr>
@@ -134,96 +66,50 @@
                         </tbody>
                     </table>
                     <br>
-                    <form method="GET" action="/check_in_item">
-                        <button type="submit" name="action" value="add" class="button is-info" style="align-self: last baseline; ">Check In New Items</button>
+                    <form method="GET" action="/inventory/check_in_item">
+                        <button type="submit" name="action" value="add" class="button is-info" style="align-self: last baseline;">{{ _('Check In New Items') }}</button>
                     </form>
                 </div>
             </div>
         </div>
-        <h1 class="title has-text-white">Checked Out Items</h1>
+        <h1 class="title has-text-white">{{ _('Checked Out Items') }}</h1>
         <div class="columns is-multiline">
             <div class="column is-full">
                 <div class="box">
-                    <table border="1" style="width: 100%;
-    border-collapse: collapse; :nth-child(even) {
-    background-color: #f9f9f9;">
+                    <table border="1" style="width: 100%; border-collapse: collapse; :nth-child(even) { background-color: #f9f9f9;}">
                         <thead>
-                            <tr style=":hover {
-                background-color: #ddf;">
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Item ID</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Name</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Description</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">In Date</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Out Date</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Warehouse Number</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Quantity</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Edit</th>
-                                <th style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd; background-color: #f4f4f4; /* Light gray background for headers */
-                color: #333;">Remove</th>
+                            <tr style=":hover { background-color: #ddf;}">
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Item ID') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Name') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Description') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('In Date') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Out Date') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Warehouse Number') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Quantity') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Edit') }}</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd; background-color: #f4f4f4; color: #333;">{{ _('Remove') }}</th>
                             </tr>
                         </thead>
-                            <tbody>
+                        <tbody>
                             {% for c_item in c_items %}
-                            <tr style=":hover {
-                background-color: #ddf; :nth-child(even) {
-                background-color: #f9f9f9;">
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ c_item.ItemID }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ c_item.I_Name }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ c_item.I_Disc }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ c_item.InDate }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ c_item.OutDate }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ c_item.Warehouse_Num }}</td>
-                                <td style="padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;">{{ c_item.Quantity }}</td>
+                            <tr style=":hover { background-color: #ddf; :nth-child(even) { background-color: #f9f9f9;}}">
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ c_item.ItemID }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ c_item.I_Name }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ c_item.I_Disc }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ c_item.InDate }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ c_item.OutDate }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ c_item.Warehouse_Num }}</td>
+                                <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ c_item.Quantity }}</td>
                                 <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">
-                                    <form method="POST" action="/inventory">
+                                    <form method="POST" action="/inventory/inventory">
                                         <input type="hidden" name="item_id" value="{{ c_item.ItemID }}">
-                                        <button type="submit" name="action" value="o_edit" class="button is-info">Edit</button>
+                                        <button type="submit" name="action" value="o_edit" class="button is-info">{{ _('Edit') }}</button>
                                     </form>
                                 </td>
                                 <td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">
-                                    <form method="POST" action="/inventory">
+                                    <form method="POST" action="/inventory/inventory">
                                         <input type="hidden" name="item_id" value="{{ c_item.ItemID }}">
-                                        <button type="submit" name="action" value="o_del" class="button is-info">Remove</button>
+                                        <button type="submit" name="action" value="o_del" class="button is-info">{{ _('Remove') }}</button>
                                     </form>
                                 </td>
                             </tr>

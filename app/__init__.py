@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, session, g
+from flask import Flask, request, session, g, redirect, url_for
 import secrets
 import logging
 from datetime import date
@@ -6,7 +6,7 @@ import colorlog
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from app.translations import load_translations
-from app.models import Employee
+import os
 
 # Initialize global variables
 db = SQLAlchemy()
@@ -63,14 +63,18 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
-    # Import blueprints and models
+    # Import blueprints
     from app.auth.route import auth_bp
     from app.core.route import core_bp
-    from app.models import Employee
-
-    # Register blueprints
+    from app.inventory.route import inventory_bp  # Add your new blueprint import
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(core_bp, url_prefix='/core')
+    app.register_blueprint(inventory_bp, url_prefix='/inventory')  # Register the new blueprint
+
+    # Ensure _ is available in templates
+    @app.context_processor
+    def inject_translations():
+        return dict(_=g.translations.get)
 
     # Define language selector function
     @app.before_request
@@ -79,8 +83,8 @@ def create_app():
             session['language'] = request.accept_languages.best_match(['en_US', 'zh_CN'])
         g.translations = load_translations(session['language'])
 
-    @app.route('/set_language', methods=['POST'])
-    def set_language():
+    @app.route('/set_language', methods=['POST'], endpoint='set_language')
+    def set_language_route():
         language = request.form['language']
         session['language'] = language
         return redirect(request.referrer)
@@ -90,4 +94,5 @@ def create_app():
 
 @login_manager.user_loader
 def load_user(user_id):
+    from app.models import Employee  # Import here to avoid circular import
     return Employee.query.get(int(user_id))

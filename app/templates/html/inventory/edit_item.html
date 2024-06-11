@@ -1,45 +1,25 @@
-{% extends "./html/base.html" %}
-
+{% extends "html/core/base.html" %}
 {% block content %}
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="/">Home</a>
-            {% if current_user.is_authenticated %}
-            <a class="navbar-item" href="/dashboard">Dashboard</a>
-            <a class="navbar-item" href="/logout">Logout</a>
-            {% endif %}
-            {% if not current_user.is_authenticated %}
-            <a class="navbar-item" href="/login">Login</a>
-            {% endif %}
-            <a class="navbar-item" href="/inventory">Inventory</a>
-            <a class="navbar-item" href="/sales">Sales</a>
-            <a class="navbar-item" href="/purchases">Purchases</a>
-            <a class="navbar-item" href="/design">Design Center</a>
-            <a class="navbar-item" href="/report">Report A Bug</a>
-        </div>
-    </div>
-</nav>
 <div class="column is-4 is-offset-4">
-    <h3 class="title">Edit Item</h3>
+    <h3 class="title">{{ g.translations['Edit_Item'] }}</h3>
     <div class="box">
         <form method="POST" action="">
             <div class="field">
-                <label class="label">Item Name:</label>
+                <label class="label">{{ g.translations['Item_Name'] }}</label>
                 <div class="control">
                     <input class="input is-large" type="text" name="name" placeholder="Item Name" value="{{ item.I_Name }}" autofocus="">
                 </div>
             </div>
 
             <div class="field">
-                <label class="label">Item Description:</label>
+                <label class="label">{{ g.translations['Item_Disc'] }}</label>
                 <div class="control">
                     <input class="input is-large" type="text" name="disc" placeholder="Description for Item" value="{{ item.Dept }}" autofocus="">
                 </div>
             </div>
 
             <div class="field">
-                <label class="label">In Date:</label>
+                <label class="label">{{ g.translations['In_Date'] }}</label>
                 <div class="control">
                     <input class="input is-large" type="text" name="in_date" placeholder="In Date" value="{{ item.InDate }}">
                 </div>
