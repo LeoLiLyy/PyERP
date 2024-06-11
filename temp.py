@@ -287,78 +287,7 @@ def purchases():
     pass
 
 
-@app.route("/design")
-@login_required
-def design():
-    return render_template("html/design.html")
 
-
-@app.route('/inventory', methods=["GET", "POST"])
-@login_required
-def inventory():
-    items = Inventory.query.all()
-    item_in = []
-    item_out = []
-    for i in range(len(items)):
-        if items[i]["Out_Date"] is None:
-            item_in.append(items[i])
-        else:
-            item_out.append(items[i])
-    total_items_in = len(items_in)
-    total_capacity = 1000
-    used_space = sum(item.Quantity for item in items_in)
-    free_space = total_capacity - used_space
-    # generating the chart that's going to be displayed on the webpage
-    create_space_chart(used_space, free_space)
-    item_id = request.form.get('item_id')
-    action = request.form.get('action')
-    submit = request.form.get('submit')
-    all_items = Inventory.query.all()
-    if item_id:
-        if action == 'i_edit':
-            return redirect("/edit_item/" + str(item_id))
-        elif action == 'i_check_out':
-            return check_out_item(item_id)
-        elif action == 'o_edit':
-            return redirect("/edit_item/" + str(item_id))
-        elif action == 'o_del':
-            Inventory.query.filter(Inventory.Item_Id == item_id).delete()
-            return redirect("/inventory")
-        else:
-            return redirect("/inventory")
-    return render_template(escape('html/inventory.html'), items=escape(items_in), o_items=item_out,
-                           total_items=total_items_in,
-                           available_space=free_space)
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-@app.route("/design/new_design", methods=["GET", "POST"])
-@login_required
-def new_design():
-    if request.method == "POST":
-        p_name = request.form.get("productName")
-        p_detail = request.form.get("designDetails")
-        if 'fileUpload' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['fileUpload']
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # Here you can save `p_name`, `p_detail`, and `filename` to your database if needed
-            flash('File successfully uploaded')
-            return redirect(url_for('design'))
-        else:
-            flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
-            return redirect(request.url)
-    return render_template("html/new_design.html")
 
 
 @app.route('/report', methods=['GET', 'POST'])

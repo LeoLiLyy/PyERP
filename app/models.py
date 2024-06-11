@@ -19,7 +19,7 @@ class Employee(UserMixin, db.Model):
 
 
 # model for inventory
-class Inventory(UserMixin, db.Model):
+class Inventory(db.Model):
     __tablename__ = 'inventory'
     ItemID = db.Column(db.Integer, primary_key=True, unique=True, nullable=False)
     I_Name = db.Column(db.String(20), nullable=True)
@@ -30,4 +30,27 @@ class Inventory(UserMixin, db.Model):
     Quantity = db.Column(db.Integer, nullable=True)
 
     def get_id(self):
-        return str(self.EmployeeID)
+        return str(self.ItemID)
+
+
+class Project(db.Model):
+    ProjectID = db.Column(db.Integer, primary_key=True, unique=True, nullable=False)
+    P_Name = db.Column(db.String(100), nullable=False)
+    P_Disc = db.Column(db.String(500), nullable=True)
+    Deadline = db.Column(db.String(10), nullable=True)
+    Products = db.Column(db.String(500), nullable=True)
+    Customer = db.Column(db.String(500), nullable=True)
+
+    def get_id(self):
+        return str(self.ProjectID)
+
+
+class Design(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(100), nullable=False)
+    design_details = db.Column(db.Text, nullable=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    file_path = db.Column(db.String(200), nullable=True)
+
+    def get_id(self):
+        return str(self.id)

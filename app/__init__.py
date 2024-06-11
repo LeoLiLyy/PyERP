@@ -66,10 +66,12 @@ def create_app():
     # Import blueprints
     from app.auth.route import auth_bp
     from app.core.route import core_bp
-    from app.inventory.route import inventory_bp  # Add your new blueprint import
+    from app.inventory.route import inventory_bp
+    from app.pro.route import product_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(core_bp, url_prefix='/core')
-    app.register_blueprint(inventory_bp, url_prefix='/inventory')  # Register the new blueprint
+    app.register_blueprint(inventory_bp, url_prefix='/inventory')
+    app.register_blueprint(product_bp, url_prefix='/pro')
 
     # Ensure _ is available in templates
     @app.context_processor

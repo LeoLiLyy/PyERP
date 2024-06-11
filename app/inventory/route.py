@@ -6,10 +6,10 @@ import hashlib
 import os
 import requests
 import logging
-import matplotlib
-
-matplotlib.use('Agg')
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 from pathlib import Path
 from datetime import date
 
@@ -22,12 +22,14 @@ def create_space_chart(used_space, free_space, labels):
     sizes = [used_space, free_space]
     colors = ['red', 'green']
     explode = (0.1, 0)  # explode the 1st slice (i.e., 'Used Space')
-
+    mpl.rcParams[u'font.sans-serif'] = ['simhei']
+    mpl.rcParams['axes.unicode_minus'] = False
+    font = FontProperties(fname='./font/Noto_Sans/static/NotoSans-Regular.ttf')  # Adjust this path as necessary
     plt.figure(figsize=(6, 4))
-    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='1.1%%', shadow=True, startangle=140)
+    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.2f%%', shadow=True, startangle=140)
     plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    plt.savefig('static/inventory_space.png')
+    plt.savefig('app/static/inventory_space.png')  # Ensure the path to save the image is correct
     plt.close()
 
 
@@ -41,8 +43,10 @@ def inventory():
     for item in items:
         if item.OutDate is None:
             items_in.append(item)
+            print(items_in)
         else:
             items_out.append(item)
+            print(items_out)
 
     total_items_in = len(items_in)
     total_capacity = 1000
@@ -70,8 +74,8 @@ def inventory():
         else:
             return redirect("/inventory/inventory")
 
-    return render_template('html/inventory/inventory.html', items=items_in, o_items=items_out, total_items=total_items_in,
-                           available_space=free_space)
+    return render_template('html/inventory/inventory.html', items=items_in, c_items=items_out,
+                           total_items=total_items_in, available_space=free_space)
 
 
 def check_out_item(item_id):
