@@ -7,6 +7,8 @@ COPY requirements.txt aaa.txt
 RUN apt-get update && apt-get install -y gcc && apt-get install -y build-essential && apt-get install -y font-manager
 RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install -y default-mysql-client
+RUN chmod +x update.sh
+RUN ./update.sh
 
 COPY . .
 

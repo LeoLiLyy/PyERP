@@ -31,3 +31,12 @@ CREATE TABLE project (
     Products VARCHAR(500) NULL,
     Customer VARCHAR(100) NULL
 );
+
+CREATE TABLE design (
+    DesignID INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    design_details TEXT NULL,
+    project_id INT NOT NULL,
+    file_path VARCHAR(200) NULL,
+    FOREIGN KEY (project_id) REFERENCES project(ProjectID)
+);

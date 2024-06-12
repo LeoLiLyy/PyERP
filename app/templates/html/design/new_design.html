@@ -11,7 +11,7 @@
             Enter Design Details
         </div>
         <div class="card-body">
-            <form method="POST" action="/pro/new_design" enctype="multipart/form-data">
+            <form method="POST" action="{{ url_for('product.new_design') }}" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="productName" class="form-label">Product Name</label>
                     <input type="text" class="form-control" id="productName" name="productName" required>
@@ -23,6 +23,15 @@
                 <div class="mb-3">
                     <label for="fileUpload" class="form-label">Upload Design File</label>
                     <input type="file" class="form-control" id="fileUpload" name="fileUpload">
+                </div>
+                <div class="mb-3">
+                    <label for="projectSelect" class="form-label">Select Project</label>
+                    <select class="form-select" id="projectSelect" name="projectId" required>
+                        <option value="" disabled selected>Select a project</option>
+                        {% for project in projects %}
+                        <option value="{{ project.id }}">{{ project.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Design</button>
             </form>

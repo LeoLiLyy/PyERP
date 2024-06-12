@@ -55,7 +55,7 @@ def create_app():
 
     # App configuration
     app.config['UPLOAD_FOLDER'] = './uploads'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:toor@localhost:8889/pyerp'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:toor@db/pyerp'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Initialize extensions
