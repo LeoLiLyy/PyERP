@@ -8,20 +8,10 @@ services:
     volumes:
       - ".:/app"
       - "./logs:/app/logs"
-    expose:
-      - "5000"
+    ports:
+      - "6000:5000"
     depends_on:
       - db
-
-  nginx:
-    build:
-      context: ./nginx
-    volumes:
-      - .:/app
-    ports:
-      - "1080:80"
-    depends_on:
-      - flask
     restart: unless-stopped
 
   db:

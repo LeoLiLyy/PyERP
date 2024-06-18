@@ -6,6 +6,7 @@ from sqlalchemy import inspect, text
 app = create_app()
 app.app_context().push()
 
+
 # Function to apply database updates without deleting data
 def update_database():
     inspector = inspect(db.engine)

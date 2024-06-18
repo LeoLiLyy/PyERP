@@ -287,9 +287,6 @@ def purchases():
     pass
 
 
-
-
-
 @app.route('/report', methods=['GET', 'POST'])
 @login_required
 def report():

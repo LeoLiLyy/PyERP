@@ -9,7 +9,6 @@ from app.translations import load_translations
 import os
 
 # Initialize global variables
-db = SQLAlchemy()
 login_manager = LoginManager()
 
 
@@ -59,6 +58,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Initialize extensions
+    from app.models import db
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
